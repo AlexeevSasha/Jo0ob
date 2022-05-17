@@ -4,19 +4,34 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc",
-    "server": "nodemon index.ts"
+    "server": "nodemon index.ts",
+    "client": "npm start --prefix ../frontend",
+    "start": "concurrently --kill-others-on-fail \" npm run server\" \" npm run client\""
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
+    "concurrently": "^7.2.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.17.3",
-    "mongoose": "^6.3.3"
+    "express-async-errors": "^3.1.1",
+    "http-status-codes": "^2.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.3",
+    "morgan": "^1.10.0",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
+    "@types/morgan": "^1.9.3",
+    "@types/bcryptjs": "^2.4.2",
     "@types/body-parser": "^1.19.2",
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^17.0.23",
     "@types/nodemon": "^1.19.1",
+    "@types/validator": "^13.7.2",
     "nodemon": "^2.0.15",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
