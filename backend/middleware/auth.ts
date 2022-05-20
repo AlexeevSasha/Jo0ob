@@ -19,7 +19,6 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
          req.user = {userId: payload.userId};
         next()
     } catch (error) {
-        console.log(error)
         throw  new UnauthenticatedError('Authentication invalid')
     }
 }
