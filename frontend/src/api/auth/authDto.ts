@@ -11,15 +11,24 @@ export interface ILogin{
 }
 
 export interface IUser {
+    id: string
     email: string;
     name: string;
     lastName: string;
     location: string
 }
 
+
+
 export interface IUserServer {
     user: IUser;
     token: string;
-    location: string
+}
+
+export interface IUpdateUser {
+    email?: string;
+    name?: string;
+    lastName?: string;
+    location?: string
 }
 
