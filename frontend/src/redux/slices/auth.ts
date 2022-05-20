@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {loginThunk, registerThunk} from '../thunk/auth'
+import {loginThunk, registerThunk, updateUserThunk} from '../thunk/auth'
 import {STATUS} from "../reduxType";
-import {addUserLocalStorage} from "../../hooks/localStorage";
+import {addUserLocalStorage, removeUserLocalStorage} from "../../utils/localStorage";
 import {IUser} from "../../api/auth/authDto";
 
 
@@ -21,7 +21,12 @@ export const auth = createSlice({
     name:'auth',
     initialState,
     reducers: {
-
+        logout: (state) => {
+            state.status = STATUS.NEVER;
+            state.user = null;
+            state.token = '';
+            removeUserLocalStorage()
+        }
     },
     extraReducers: (builder => {
         //register
@@ -30,11 +35,11 @@ export const auth = createSlice({
             state.user = null;
         })
         builder.addCase(registerThunk.fulfilled, (state, {payload}) => {
-            const {user, token, location} =  payload;
+            const {user, token} =  payload;
             state.status = STATUS.LOADED;
             state.user = user;
             state.token = token;
-            addUserLocalStorage({user, token, location})
+            addUserLocalStorage({user, token})
         })
         builder.addCase(registerThunk.rejected, (state) => {
             state.status = STATUS.ERROR
@@ -46,17 +51,32 @@ export const auth = createSlice({
             state.user = null;
         })
         builder.addCase(loginThunk.fulfilled, (state, {payload}) => {
-            const {user, token, location} =  payload;
+            const {user, token} =  payload;
             state.status = STATUS.LOADED;
             state.user = user;
             state.token = token;
-            addUserLocalStorage({user, token, location})
+            addUserLocalStorage({user, token})
         })
         builder.addCase(loginThunk.rejected, (state) => {
+            state.status = STATUS.ERROR
+        })
+
+        //update
+        builder.addCase(updateUserThunk.pending, (state) => {
+            state.status = STATUS.LOADING
+        })
+        builder.addCase(updateUserThunk.fulfilled, (state, {payload}) => {
+            const {user, token} =  payload;
+            state.status = STATUS.LOADED;
+            state.user = user;
+            state.token = token;
+            addUserLocalStorage({user, token})
+        })
+        builder.addCase(updateUserThunk.rejected, (state) => {
             state.status = STATUS.ERROR
         })
     })
 })
 
-export const {} = auth.actions
+export const {logout} = auth.actions
 export default auth.reducer
