@@ -9,7 +9,16 @@ import authRouter from "./routes/authRouter";
 import jobsRouter from "./routes/jobsRouter";
 import {notFoundMiddleware} from "./middleware/not-found";
 import {errorHandlerMiddleware} from './middleware/error-handler';
+import {authMiddleware} from "./middleware/auth";
 
+
+declare module "express-serve-static-core" {
+    interface Request {
+        user: {
+            userId?: string
+        };
+    }
+}
 
 dotenv.config()
 
@@ -22,16 +31,18 @@ app.use(json());
 
 
 
+
 if (process.env.NODE_ENV !== 'production') {
     app.use(morgan('dev'))
 }
 
 
 app.use('/api/auth', authRouter)
-app.use('/api/jobs', jobsRouter)
+app.use('/api/jobs',authMiddleware, jobsRouter)
 
 app.use(errorHandlerMiddleware)
 app.use(notFoundMiddleware)
+
 
 
 const start = async () : Promise<void> => {

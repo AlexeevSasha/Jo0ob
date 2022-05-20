@@ -4,7 +4,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc",
-    "server": "nodemon index.ts",
+    "server": "nodemon  index.ts",
     "client": "npm start --prefix ../frontend",
     "start": "concurrently --kill-others-on-fail \" npm run server\" \" npm run client\""
   },
