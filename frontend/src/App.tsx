@@ -1,8 +1,9 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {Dashboard, Main, Error404, Login, Register} from "./pages";
+import {Dashboard, Main, Error404, Login, Register, Statistics, AllJob, AddJob, Profile} from "./pages";
 import {AuthProvider, UserProvider} from "./hooks/AuthProvider";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {Layout} from "./components/";
 
 
 
@@ -27,7 +28,13 @@ function App() {
                  <Route path='/' element={<Main/>}/>
              </Route>
              <Route  element={<AuthProvider/>}>
-                 <Route path='/dashboard' element={<Dashboard/>}/>
+                 <Route element={<Layout/>} >
+                     <Route path='/dashboard' element={<Dashboard/>}/>
+                     <Route path='/stats' element={<Statistics/>}/>
+                     <Route path='/all-jobs' element={<AllJob/>}/>
+                     <Route path='/add-job' element={<AddJob/>}/>
+                     <Route path='/profile' element={<Profile/>}/>
+                 </Route>
              </Route>
              <Route path='*' element={<Error404/>}/>
          </Routes>
