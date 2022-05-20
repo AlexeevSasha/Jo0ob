@@ -1,15 +1,9 @@
 import {IUserServer} from "../api/auth/authDto";
 
 
-interface IUserLocalStorage extends IUserServer {
-    location: string
-}
-
-
-export const addUserLocalStorage = ({user, token, location} : IUserLocalStorage) => {
+export const addUserLocalStorage = ({user, token} : IUserServer) => {
     localStorage.setItem('user', JSON.stringify(user))
     localStorage.setItem('token', token)
-    localStorage.setItem('location', location)
 }
 
 export const removeUserLocalStorage = () => {
@@ -17,3 +11,5 @@ export const removeUserLocalStorage = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('location')
 }
+
+export const getToken = () => localStorage.getItem("token")
