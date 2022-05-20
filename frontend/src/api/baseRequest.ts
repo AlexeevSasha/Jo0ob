@@ -1,8 +1,9 @@
-import {errorNotification} from "../hooks/notification";
+import {errorNotification} from "../utils/notification";
+
 
 export const BASE_URL = 'http://localhost:5000'
 
-const request = async (url: string, data: any, token: string | undefined) => {
+const request = async (url: string, data: any, token?: string) => {
     const headersToken = token ? {Authorization: `Bearer ${token}`} : {}
     const headersMultiPart = typeof data.body === 'string' ? {"Content-type": "application/json;charset=utf-8"} : {}
 
@@ -43,8 +44,8 @@ export const get = (url: string, token?: string) => request(`${BASE_URL}${url}`,
 export const post = (url: string, body: string | FormData, token?: string) => {
     return request(`${BASE_URL}${url}`, {method: "POST", body}, token)
 }
-export const put = (url: string, body: string, token: string) => {
-    return request(`${BASE_URL}${url}`, {method: "PUT", body}, token)
+export const patch = (url: string, body: string, token: string) => {
+    return request(`${BASE_URL}${url}`, {method: "PATCH", body}, token)
 }
 export const remove = (url: string, token: string) => request(`${BASE_URL}${url}`, {method: "DELETE"}, token)
 
