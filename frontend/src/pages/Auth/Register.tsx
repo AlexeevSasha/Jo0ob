@@ -18,10 +18,10 @@ interface IForm extends IRegister {
 
 export const Register: FC = () => {
     const dispatch = useAppDispatch()
-    const {status, user} = useAppSelector(state => state.auth)
+    const {status} = useAppSelector(state => state.auth)
     const navigate = useNavigate()
     const back = useCallback(() => navigate(-1), []);
-    const redirect = useCallback(() => navigate('/dashboard'), []);
+    const redirect = useCallback(() => navigate('/stats'), []);
 
 
     const onFinish = (values: IForm) => {

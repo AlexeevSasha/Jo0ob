@@ -18,7 +18,7 @@ export const Login: FC = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const back  = useCallback(() => navigate('/'), [])
-    const redirect  = useCallback(() => navigate('/dashboard'), [])
+    const redirect  = useCallback(() => navigate('/stats'), [])
 
     const onFinish = (values: ILogin) => {
         const {email, password} = values
@@ -35,7 +35,6 @@ export const Login: FC = () => {
                     name="basic"
                     initialValues={{remember: true}}
                     onFinish={onFinish}
-                    autoComplete="off"
                 >
                     <Form.Item
                         label="Email"
