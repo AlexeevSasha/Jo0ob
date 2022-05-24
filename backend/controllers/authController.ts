@@ -19,9 +19,9 @@ const userObj = (user: IUser & { _id: Types.ObjectId }, token: string) => {
     }
 }
 
-export const reqister = async (req: Request, res: Response, next: NextFunction) => {
+export const reqister = async (req: Request<{}, {}, IUser>, res: Response, next: NextFunction) => {
     try {
-        const {email, name, password, lastName, location} = req.body as IUser;
+        const {email, name, password} = req.body;
         if (!email || !name || !password) {
             throw new BadRequestError('Please provide all values')
         }
@@ -30,7 +30,6 @@ export const reqister = async (req: Request, res: Response, next: NextFunction) 
         if (userAlreadyExist) {
             throw new BadRequestError('Email already in use')
         }
-
 
         const user = await User.create(req.body)
         const token = user.createJWT();
@@ -43,7 +42,7 @@ export const reqister = async (req: Request, res: Response, next: NextFunction) 
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const {email, password} = req.body as { email: string, password: string };
+        const {email, password} = req.body as { email?: string, password?: string };
         if (!email || !password) {
             throw new BadRequestError('Please provide all values')
         }
@@ -64,8 +63,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     }
 }
 
-export const updateUser = async (req: Request, res: Response) => {
-    const {email, name, lastName, location} = req.body as IUser;
+export const updateUser = async (req: Request<{}, {}, IUser>, res: Response) => {
+    const {email, name, lastName, location} = req.body;
     if (!email && !name && !lastName && !location) {
         throw new BadRequestError('Please provide  value')
     }
