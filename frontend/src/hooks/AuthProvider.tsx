@@ -19,7 +19,7 @@ export const UserProvider: FC= () => {
     const { user } = useAppSelector(state => state.auth)
 
     if (user) {
-        return <Navigate to="/dashboard" replace/>;
+        return <Navigate to="/stats" replace/>;
     }
     return <Outlet/>
 }
