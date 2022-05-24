@@ -1,4 +1,5 @@
 import {errorNotification} from "../utils/notification";
+import {removeUserLocalStorage} from "../utils/localStorage";
 
 
 export const BASE_URL = 'http://localhost:5000'
@@ -28,13 +29,13 @@ const request = async (url: string, data: any, token?: string) => {
         result = await response.json()
         return result;
     } else {
-        if (response.status === 400 ||  response.status === 401) {
             const textJson: {msg: string} = await response.json();
+            if (textJson.msg === 'Authentication invalid') {
+                throw new Error(textJson.msg);
+                removeUserLocalStorage()
+            }
             errorNotification(textJson.msg)
             throw new Error(textJson.msg);
-        }
-        if (response.status === 409) throw new Error('Already exists');
-        else throw  {status: response.status}
     }
 
 }
