@@ -1,5 +1,5 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {Dashboard, Main, Error404, Login, Register, Statistics, AllJob, AddJob, Profile} from "./pages";
+import {Main, Error404, Login, Register, Statistics, AllJob, AddJob, Profile, EditJob} from "./pages";
 import {AuthProvider, UserProvider} from "./hooks/AuthProvider";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,17 +23,17 @@ function App() {
          />
          <Routes>
              <Route  element={<UserProvider/>}>
-                 <Route path='/login' element={<Login/>}/>
-                 <Route path='/register' element={<Register/>}/>
+                 <Route path='login' element={<Login/>}/>
+                 <Route path='register' element={<Register/>}/>
                  <Route path='/' element={<Main/>}/>
              </Route>
              <Route  element={<AuthProvider/>}>
                  <Route element={<Layout/>} >
-                     <Route path='/dashboard' element={<Dashboard/>}/>
-                     <Route path='/stats' element={<Statistics/>}/>
-                     <Route path='/all-jobs' element={<AllJob/>}/>
-                     <Route path='/add-job' element={<AddJob/>}/>
-                     <Route path='/profile' element={<Profile/>}/>
+                     <Route path='stats' element={<Statistics/>}/>
+                     <Route path='all-jobs' element={<AllJob/>}/>
+                     <Route path='all-jobs/:id/edit' element={<EditJob/>}/>
+                     <Route path='add-job' element={<AddJob/>}/>
+                     <Route path='profile' element={<Profile/>}/>
                  </Route>
              </Route>
              <Route path='*' element={<Error404/>}/>
