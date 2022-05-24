@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {loginThunk, registerThunk, updateUserThunk} from '../thunk/auth'
 import {STATUS} from "../reduxType";
 import {addUserLocalStorage, removeUserLocalStorage} from "../../utils/localStorage";
-import {IUser} from "../../api/auth/authDto";
+import {IUser, IUserServer} from "../../api/auth/authDto";
 
 
 interface IAuth  {
@@ -26,6 +26,13 @@ export const auth = createSlice({
             state.user = null;
             state.token = '';
             removeUserLocalStorage()
+        },
+        addUser: (state, {payload}: PayloadAction<IUserServer>) => {
+            const {user, token} =  payload;
+            state.status = STATUS.LOADED;
+            state.user = user;
+            state.token = token;
+            addUserLocalStorage({user, token})
         }
     },
     extraReducers: (builder => {
