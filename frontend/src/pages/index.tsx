@@ -2,8 +2,8 @@ export {Main} from './Main';
 export {Error404} from './Error404';
 export {Login} from './auth/Login';
 export {Register} from './auth/Register'
-export {Dashboard} from "./dashboard";
 export {AllJob} from "./dashboard/AllJob";
 export {AddJob} from "./dashboard/AddJob";
 export {Statistics} from "./dashboard/Statistics";
 export {Profile} from "./dashboard/Profile";
+export {EditJob} from "./dashboard/EditJob";
