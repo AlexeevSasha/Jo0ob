@@ -25,7 +25,7 @@ export const Main: FC = () => {
                             battery life, so it’s reliable wherever the workday takes you. Track jobs and hours, and
                             schedule jobs, from anywhere.
                         </Paragraph>
-                       <Button type="primary"> <Link to='login'>Login/Register</Link></Button>
+                       <Button type="primary"> <LinkStyle to='login'>Login/Register</LinkStyle></Button>
                     </TitleDiv>
                     <ImgBigStyle><img src={mainImg} alt=""/></ImgBigStyle>
                 </Flex>
@@ -33,6 +33,14 @@ export const Main: FC = () => {
         </Wrapper>
     )
 }
+
+
+const LinkStyle = styled(Link)`
+  color: inherit;
+  &:hover {
+    color: inherit;
+  }
+`
 
 const Container = styled.div`
   padding: 20px 20px 0;
