@@ -13,7 +13,6 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     }
     const token = authorization.split(' ')[1];
 
-
     try {
         const payload = jwt.verify(token, String(process.env.JWT_SECRET)) as UserPayload
          req.user = {userId: payload.userId};
