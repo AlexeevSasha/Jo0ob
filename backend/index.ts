@@ -9,7 +9,6 @@ import authRouter from "./routes/authRouter";
 import jobsRouter from "./routes/jobsRouter";
 import {notFoundMiddleware} from "./middleware/not-found";
 import {errorHandlerMiddleware} from './middleware/error-handler';
-import {authMiddleware} from "./middleware/auth";
 
 
 declare module "express-serve-static-core" {
@@ -38,7 +37,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 
 app.use('/api/auth', authRouter)
-app.use('/api/jobs',authMiddleware, jobsRouter)
+app.use('/api/jobs', jobsRouter)
 
 app.use(errorHandlerMiddleware)
 app.use(notFoundMiddleware)
