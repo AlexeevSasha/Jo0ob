@@ -3,20 +3,17 @@ import {STATUS} from "../reduxType";
 import {addJobThunk, byIdJobThunk, deleteJobThunk, editJobThunk, getAllJobThunk, staticAllJobThunk} from "../thunk/job";
 import {IJobService, IStaticServer} from "../../api/job/jobDto";
 
-
-
-
 interface IJob  {
     jobs: IJobService[] | [];
     job: IJobService | null;
-    stats: IStaticServer | null;
+    statistics: IStaticServer | null;
     status: STATUS;
 }
 
 const initialState : IJob = {
     jobs: [],
     job: null,
-    stats: null,
+    statistics: null,
     status: STATUS.NEVER,
 }
 
@@ -88,11 +85,11 @@ export const job = createSlice({
         //static all job
         builder.addCase(staticAllJobThunk.pending, (state) => {
             state.status = STATUS.LOADING
-            state.stats = null;
+            state.statistics = null;
         })
         builder.addCase(staticAllJobThunk.fulfilled, (state, {payload}) => {
             state.status = STATUS.LOADED;
-            state.stats = payload;
+            state.statistics = payload;
         })
         builder.addCase(staticAllJobThunk.rejected, (state) => {
             state.status = STATUS.ERROR
