@@ -12,7 +12,7 @@ export const Error404: FC = () => {
             <img src={logo} alt="error"/>
             <Title level={1}>Ohh! page not found</Title>
             <Paragraph>We can`t seem to find the page you`re looking for</Paragraph>
-            <Link to='/dashboard'>back home</Link>
+            <Link to='/stats'>back home</Link>
         </Flex>
     )
 }
@@ -25,11 +25,13 @@ const Flex = styled.div`
   height: 100vh;
   padding: 20px;
   text-align: center;
+
   & > img {
     max-width: 500px;
     width: 100%;
     margin-bottom: 40px;
   }
+
   & > h1 {
     color: inherit;
     font-weight: 700;
