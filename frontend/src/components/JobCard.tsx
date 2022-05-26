@@ -6,6 +6,7 @@ import {IJobService} from "../api/job/jobDto";
 import {CalendarOutlined, EnvironmentOutlined} from "@ant-design/icons";
 import {BtnEditDelete} from "./BtnEditDelete";
 import {colors} from "../utils/colors-status";
+import {useAppSelector} from "../redux/reduxType";
 
 const {Title, Text} = Typography;
 
@@ -19,6 +20,8 @@ export const JobCard: FC<IJobService> = ({
                                              company,
                                              location
                                          }) => {
+
+    const {user} = useAppSelector(state => state.auth)
     return (
         <Wrapper>
             <JobHeader>
@@ -37,7 +40,7 @@ export const JobCard: FC<IJobService> = ({
                     {location && <li><EnvironmentOutlined style={{marginRight: 10}}/>{location}</li>}
                 </ul>
             </JobBody>
-            <BtnEditDelete id={id}/>
+            {user?.id === createBy ? <BtnEditDelete id={id}/> : null}
         </Wrapper>
     )
 }
@@ -62,7 +65,7 @@ const Date = styled.span`
   font-weight: 600;
 `
 
-const Status= styled.div<{ colors: string }>`
+const Status = styled.div<{ colors: string }>`
   position: relative;
   color: ${({colors}) => colors};
 
