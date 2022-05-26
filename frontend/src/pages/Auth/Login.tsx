@@ -15,9 +15,9 @@ const {Title, Paragraph, Text} = Typography;
 
 
 export const Login: FC = () => {
+    const dispatch = useAppDispatch()
     const {status} = useAppSelector(state => state.auth)
     const navigate = useNavigate()
-    const dispatch = useAppDispatch()
     const back  = useCallback(() => navigate('/'), [])
     const redirect  = useCallback(() => navigate('/stats'), [])
     const onFinish = (values: ILogin) => {
