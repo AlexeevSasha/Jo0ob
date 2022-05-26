@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
-import {IAddJob, IJobService, IStaticServer, JobType, Status} from "../../api/job/jobDto";
+import {IAddJob, IFilter, IJobService, IStaticServer, JobType, Status} from "../../api/job/jobDto";
 import {addJob, editJob, getAllJob, getByIdJob, getStaticJob, removeJob} from "../../api/job/jobService";
 import {successNotification} from "../../utils/notification";
 
@@ -14,10 +14,10 @@ export const addJobThunk = createAsyncThunk<IJobService[],  {data: IAddJob<Statu
     }
 )
 
-export const getAllJobThunk = createAsyncThunk<IJobService[]>(
+export const getAllJobThunk = createAsyncThunk<IJobService[], {filter?: IFilter, search?: string}>(
     'job/fetchAllJob',
-    async () => {
-        const response: IJobService[] =  await getAllJob()
+    async ({filter, search} ) => {
+        const response: IJobService[] =  await getAllJob(filter, search)
         return response
     }
 )
