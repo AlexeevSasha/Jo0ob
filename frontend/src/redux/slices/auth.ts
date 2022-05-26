@@ -26,13 +26,6 @@ export const auth = createSlice({
             state.user = null;
             state.token = '';
             removeUserLocalStorage()
-        },
-        addUser: (state, {payload}: PayloadAction<IUserServer>) => {
-            const {user, token} =  payload;
-            state.status = STATUS.LOADED;
-            state.user = user;
-            state.token = token;
-            addUserLocalStorage({user, token})
         }
     },
     extraReducers: (builder => {
