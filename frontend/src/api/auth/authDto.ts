@@ -1,4 +1,3 @@
-
 export interface IRegister {
     name: string;
     email: string;
@@ -18,13 +17,10 @@ export interface IUser {
     location: string
 }
 
-
-
 export interface IUserServer {
     user: IUser;
     token: string;
 }
-
 export interface IUpdateUser {
     email?: string;
     name?: string;
