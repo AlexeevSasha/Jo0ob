@@ -7,3 +7,4 @@ export {JobCard} from './JobCard';
 export {SearchForm} from './SearchForm';
 export {FormJob} from './FormJob'
 export {StaticCard} from './StaticCard'
+export {Chart} from './Chart'
