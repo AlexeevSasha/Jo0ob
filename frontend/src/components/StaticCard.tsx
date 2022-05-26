@@ -4,11 +4,11 @@ import {Carousel} from 'antd';
 import {CarryOutOutlined, HistoryOutlined, BugOutlined} from "@ant-design/icons";
 import {useAppDispatch, useAppSelector} from "../redux/reduxType";
 import {staticAllJobThunk} from "../redux/thunk/job";
-import {IStaticServer} from "../api/job/jobDto";
+import {Stats} from "../api/job/jobDto";
 import {useWindowDimensions} from "../hooks/useWindowDimensions";
 
 
-const generateStatic = (stats: IStaticServer) => {
+const generateStatic = (stats: Stats) => {
     return [
         {
             title: 'Pending Applications',
@@ -37,18 +37,18 @@ const generateStatic = (stats: IStaticServer) => {
 
 export const StaticCard = () => {
     const dispatch = useAppDispatch()
-    const {stats} = useAppSelector(state => state.jobs)
+    const {statistics} = useAppSelector(state => state.jobs)
     const {width} = useWindowDimensions()
 
     useEffect(() => {
         dispatch(staticAllJobThunk())
     }, [])
-    if (!stats) return null;
+    if (!statistics) return null;
     return (
         < >
-            {width >= 768 ? <CardGrid>
+            {width >= 980 ? <CardGrid>
                 {
-                    generateStatic(stats).map(({title, color, count, icon, id}) => (
+                    generateStatic(statistics.stats).map(({title, color, count, icon, id}) => (
                         <Card colors={color} key={id}>
                             <Flex colors={color}>
                                 <div>{count}</div>
@@ -58,11 +58,9 @@ export const StaticCard = () => {
                         </Card>
                     ))
                 }
-            </CardGrid> : null
-            }
-            {width <= 768 ? <Carousel>
+            </CardGrid> : <Carousel>
                 {
-                    generateStatic(stats).map(({title, color, count, icon, id}) => (
+                    generateStatic(statistics.stats).map(({title, color, count, icon, id}) => (
                         <Card colors={color} key={id}>
                             <Flex colors={color}>
                                 <div>{count}</div>
@@ -72,7 +70,7 @@ export const StaticCard = () => {
                         </Card>
                     ))
                 }
-            </Carousel> : null
+            </Carousel>
             }
         </>
     )
@@ -85,7 +83,7 @@ const CardGrid = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 15px;
 
-  @media ${({theme}) => theme.media._768} {
+  @media ${({theme}) => theme.media._980} {
     display: none;
   }
 
@@ -109,7 +107,7 @@ const Card = styled.div<{ colors: string }>`
     font-size: 20px;
   }
 
-  @media ${({theme}) => theme.media._768} {
+  @media ${({theme}) => theme.media._980} {
     max-width: 100%;
     padding: 10px 30px;
     height: 170px;
@@ -151,7 +149,7 @@ const Flex = styled.div<{ colors: string }>`
     }
   }
 
-  @media ${({theme}) => theme.media._768} {
+  @media ${({theme}) => theme.media._980} {
     max-width: 100%;
   }
 `
