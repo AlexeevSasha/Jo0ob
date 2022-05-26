@@ -1,8 +1,5 @@
 import {FC} from "react";
-import {Button, Typography} from 'antd';
-import styled from 'styled-components'
-import {StaticCard} from "../../components";
-
+import {StaticCard, Chart} from "../../components";
 
 
 export const Statistics: FC = () => {
@@ -10,6 +7,7 @@ export const Statistics: FC = () => {
     return (
         <div>
             <StaticCard/>
+            <Chart/>
         </div>
     )
 }
