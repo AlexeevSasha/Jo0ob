@@ -6,7 +6,7 @@ import { Wrapper, Back, Container} from './style';
 import styled from 'styled-components';
 import {loginThunk} from "../../redux/thunk/auth";
 import {ILogin} from "../../api/auth/authDto";
-import {useAppDispatch} from "../../redux/reduxType";
+import {useAppDispatch, useAppSelector, STATUS} from "../../redux/reduxType";
 
 
 
@@ -15,11 +15,11 @@ const {Title, Paragraph, Text} = Typography;
 
 
 export const Login: FC = () => {
+    const {status} = useAppSelector(state => state.auth)
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const back  = useCallback(() => navigate('/'), [])
     const redirect  = useCallback(() => navigate('/stats'), [])
-
     const onFinish = (values: ILogin) => {
         const {email, password} = values
          dispatch(loginThunk({data: {email, password}, cb: redirect}))
@@ -56,7 +56,7 @@ export const Login: FC = () => {
                         <Input.Password/>
                     </Form.Item>
 
-                    <Button type="primary" htmlType="submit" loading={false}>
+                    <Button type="primary" htmlType="submit" loading={status === STATUS.LOADING}>
                         Submit
                     </Button>
                 </Form>
