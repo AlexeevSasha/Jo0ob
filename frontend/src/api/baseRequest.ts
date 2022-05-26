@@ -1,7 +1,6 @@
 import {errorNotification} from "../utils/notification";
 import {removeUserLocalStorage} from "../utils/localStorage";
 
-
 export const BASE_URL = 'http://localhost:5000'
 
 const request = async (url: string, data: any, token?: string) => {
@@ -31,8 +30,8 @@ const request = async (url: string, data: any, token?: string) => {
     } else {
             const textJson: {msg: string} = await response.json();
             if (textJson.msg === 'Authentication invalid') {
-                throw new Error(textJson.msg);
                 removeUserLocalStorage()
+                throw new Error(textJson.msg);
             }
             errorNotification(textJson.msg)
             throw new Error(textJson.msg);
