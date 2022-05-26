@@ -4,7 +4,6 @@
 ::before {
     box-sizing: border-box;
 }
-
 html {
     font-size: 100%;
 }
@@ -36,4 +35,10 @@ a {
 .slick-dots > li.slick-active > button{
     background: black !important;
 }
+
+.recharts-wrapper {
+    position: absolute !important;
+    left: -25px;
+}
+
 
