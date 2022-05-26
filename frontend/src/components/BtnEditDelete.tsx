@@ -5,7 +5,6 @@ import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../redux/reduxType";
 import {deleteJobThunk} from "../redux/thunk/job";
 
-
 interface IProps {
     id: string
 }
