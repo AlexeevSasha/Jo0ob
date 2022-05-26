@@ -2,10 +2,6 @@ import {patch, post} from "../baseRequest";
 import {IUserServer, IRegister, ILogin, IUpdateUser} from "./authDto";
 import {getToken} from "../../utils/localStorage";
 
-
-
-
-
 export  const authRegister = (data: IRegister) : Promise<IUserServer> => {
     return post('/api/auth/register', JSON.stringify(data))
 }
