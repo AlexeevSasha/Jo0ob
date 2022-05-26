@@ -1,7 +1,7 @@
 import {FC} from "react";
 import {Button, Form, Input} from 'antd';
 import styled from 'styled-components'
-import {useAppDispatch, useAppSelector} from "../../redux/reduxType";
+import {useAppDispatch, useAppSelector, STATUS} from "../../redux/reduxType";
 import {IUpdateUser} from "../../api/auth/authDto";
 import {updateUserThunk} from "../../redux/thunk/auth";
 
@@ -9,7 +9,7 @@ import {updateUserThunk} from "../../redux/thunk/auth";
 
 export const Profile: FC = () => {
     const dispatch = useAppDispatch();
-    const {user} = useAppSelector(state => state.auth)
+    const {user, status} = useAppSelector(state => state.auth)
     const onFinish = (values: IUpdateUser) => {
         const {email, name, lastName, location} = values;
         if (email === user?.email && name === user?.name && lastName === user?.lastName && location === user?.location  ) return;
@@ -63,7 +63,7 @@ export const Profile: FC = () => {
                 </Form.Item>
                 </Flex>
 
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" loading={status === STATUS.LOADING}>
                     Submit
                 </Button>
             </Form>
