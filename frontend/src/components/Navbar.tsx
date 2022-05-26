@@ -28,13 +28,14 @@ export const Navbar: FC<IProps> = ({visible, toggle}) => {
 
     useOutsideClick(myRef, closeLogout)
 
-    const userLogout = useCallback(()  => dispatch(logout()), [])
+    const userLogout = useCallback(() => dispatch(logout()), [])
 
     return (
         <Wrapper toggleMenu={visible}>
             <MenuBtn onClick={toggle}>{visible ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>} </MenuBtn>
-            <div style={{position: 'relative'}} ref={myRef} >
-                <Button type="primary" onClick={toggleLogout}><UserOutlined/> {user?.name || 'Name'} {isLogout ? <CaretUpOutlined/> : <CaretDownOutlined/>}</Button>
+            <div style={{position: 'relative'}} ref={myRef}>
+                <Button type="primary" onClick={toggleLogout}><UserOutlined/> {user?.name || 'Name'} {isLogout ?
+                    <CaretUpOutlined/> : <CaretDownOutlined/>}</Button>
                 {isLogout && <BtnAbsolute type="primary" danger ghost onClick={userLogout}> Logout </BtnAbsolute>}
             </div>
         </Wrapper>
@@ -54,7 +55,7 @@ const Wrapper = styled.div<{ toggleMenu: boolean }>`
   box-shadow: 0 3px 0 #CECECE;
   z-index: 10;
   padding: 0 50px;
-  
+
   @media ${({theme}) => theme.media._768} {
     left: 0;
     width: 100%;
