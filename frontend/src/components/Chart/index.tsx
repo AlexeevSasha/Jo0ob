@@ -1,4 +1,4 @@
-import {FC, useState} from "react";
+import {FC, memo, useState} from "react";
 import {Typography, Button, Spin} from "antd";
 import {BarChart} from "./BarChart";
 import {AreaChart} from "./AreaChart";
@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 const {Title} = Typography
 
-export const Chart: FC = () => {
+export const Chart: FC = memo(() => {
     const {statistics} = useAppSelector(state => state.jobs)
     const [toggleChart, setToggleChart] = useState(true)
     if (!statistics) return null;
@@ -20,7 +20,7 @@ export const Chart: FC = () => {
             {toggleChart ? <BarChart data={statistics.monthly}/> : <AreaChart data={statistics.monthly}/>}
         </Container>
     )
-}
+})
 
 const Container = styled.section`
   position: relative;
