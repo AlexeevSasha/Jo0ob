@@ -1,24 +1,26 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {AnyAction, createSlice, PayloadAction, isAsyncThunkAction, isAllOf} from "@reduxjs/toolkit";
 import {loginThunk, registerThunk, updateUserThunk} from '../thunk/auth'
 import {STATUS} from "../reduxType";
 import {addUserLocalStorage, removeUserLocalStorage} from "../../utils/localStorage";
 import {IUser, IUserServer} from "../../api/auth/authDto";
 
 
-interface IAuth  {
+const isARequestAction = isAsyncThunkAction(loginThunk, registerThunk, updateUserThunk)
+
+interface IAuth {
     user: IUser | null;
     token: string
     status: STATUS;
 }
 
-const initialState : IAuth = {
-    user:  JSON.parse(`${localStorage.getItem("user")}`) || null,
+const initialState: IAuth = {
+    user: JSON.parse(`${localStorage.getItem("user")}`) || null,
     token: '',
     status: STATUS.NEVER,
 }
 
 export const auth = createSlice({
-    name:'auth',
+    name: 'auth',
     initialState,
     reducers: {
         logout: (state) => {
@@ -29,54 +31,41 @@ export const auth = createSlice({
         }
     },
     extraReducers: (builder => {
-        //register
-        builder.addCase(registerThunk.pending, (state) => {
+        builder.addMatcher(isLoading, (state) => {
             state.status = STATUS.LOADING
-            state.user = null;
         })
-        builder.addCase(registerThunk.fulfilled, (state, {payload}) => {
-            const {user, token} =  payload;
+
+        builder.addMatcher(isSuccess, (state, {payload}: PayloadAction<IUserServer>) => {
+            const {user, token} = payload;
+            addUserLocalStorage({user, token})
             state.status = STATUS.LOADED;
             state.user = user;
             state.token = token;
-            addUserLocalStorage({user, token})
         })
-        builder.addCase(registerThunk.rejected, (state) => {
+        builder.addMatcher(isError, (state) => {
             state.status = STATUS.ERROR
         })
 
-        //login
-        builder.addCase(loginThunk.pending, (state) => {
-            state.status = STATUS.LOADING
-            state.user = null;
-        })
-        builder.addCase(loginThunk.fulfilled, (state, {payload}) => {
-            const {user, token} =  payload;
-            state.status = STATUS.LOADED;
-            state.user = user;
-            state.token = token;
-            addUserLocalStorage({user, token})
-        })
-        builder.addCase(loginThunk.rejected, (state) => {
-            state.status = STATUS.ERROR
-        })
-
-        //update
-        builder.addCase(updateUserThunk.pending, (state) => {
-            state.status = STATUS.LOADING
-        })
-        builder.addCase(updateUserThunk.fulfilled, (state, {payload}) => {
-            const {user, token} =  payload;
-            state.status = STATUS.LOADED;
-            state.user = user;
-            state.token = token;
-            addUserLocalStorage({user, token})
-        })
-        builder.addCase(updateUserThunk.rejected, (state) => {
-            state.status = STATUS.ERROR
-        })
     })
 })
 
+
 export const {logout} = auth.actions
 export default auth.reducer
+
+
+function isSuccess(action: AnyAction) {
+    if (isARequestAction(action)) {
+        return action.type.endsWith('fulfilled')
+    }
+    return false;
+}
+
+function isError(action: AnyAction) {
+    return action.type.endsWith('rejected')
+}
+
+function isLoading(action: AnyAction) {
+    return action.type.endsWith('pending')
+}
+
