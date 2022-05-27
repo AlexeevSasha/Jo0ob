@@ -1,4 +1,4 @@
-import { createSlice} from "@reduxjs/toolkit";
+import {AnyAction, createSlice} from "@reduxjs/toolkit";
 import {STATUS} from "../reduxType";
 import {addJobThunk, byIdJobThunk, deleteJobThunk, editJobThunk, getAllJobThunk, staticAllJobThunk} from "../thunk/job";
 import {IJobService, IStaticServer} from "../../api/job/jobDto";
@@ -31,9 +31,7 @@ export const job = createSlice({
             state.status = STATUS.LOADED;
             state.jobs = payload;
         })
-        builder.addCase(getAllJobThunk.rejected, (state) => {
-            state.status = STATUS.ERROR
-        })
+
 
         //get by id  jobs
         builder.addCase(byIdJobThunk.pending, (state) => {
@@ -44,9 +42,7 @@ export const job = createSlice({
             state.status = STATUS.LOADED;
             state.job = payload;
         })
-        builder.addCase(byIdJobThunk.rejected, (state) => {
-            state.status = STATUS.ERROR
-        })
+
 
         //add job
         builder.addCase(addJobThunk.pending, (state) => {
@@ -55,9 +51,7 @@ export const job = createSlice({
         builder.addCase(addJobThunk.fulfilled, (state) => {
             state.status = STATUS.LOADED;
         })
-        builder.addCase(addJobThunk.rejected, (state) => {
-            state.status = STATUS.ERROR
-        })
+
 
         //delete job
         builder.addCase(deleteJobThunk.pending, (state) => {
@@ -67,9 +61,6 @@ export const job = createSlice({
             state.status = STATUS.LOADED;
             state.jobs = state.jobs.filter(job => job.id !== payload.id)
         })
-        builder.addCase(deleteJobThunk.rejected, (state) => {
-            state.status = STATUS.ERROR
-        })
 
         //edit job
         builder.addCase(editJobThunk.pending, (state) => {
@@ -77,9 +68,6 @@ export const job = createSlice({
         })
         builder.addCase(editJobThunk.fulfilled, (state) => {
             state.status = STATUS.LOADED;
-        })
-        builder.addCase(editJobThunk.rejected, (state) => {
-            state.status = STATUS.ERROR
         })
 
         //static all job
@@ -91,7 +79,8 @@ export const job = createSlice({
             state.status = STATUS.LOADED;
             state.statistics = payload;
         })
-        builder.addCase(staticAllJobThunk.rejected, (state) => {
+
+        builder.addMatcher(isError, (state) => {
             state.status = STATUS.ERROR
         })
     })
@@ -99,3 +88,7 @@ export const job = createSlice({
 
 
 export default job.reducer
+
+function isError(action: AnyAction) {
+    return action.type.endsWith('rejected')
+}
