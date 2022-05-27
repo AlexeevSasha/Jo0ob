@@ -8,11 +8,7 @@ import {loginThunk} from "../../redux/thunk/auth";
 import {ILogin} from "../../api/auth/authDto";
 import {useAppDispatch, useAppSelector, STATUS} from "../../redux/reduxType";
 
-
-
-
 const {Title, Paragraph, Text} = Typography;
-
 
 export const Login: FC = () => {
     const dispatch = useAppDispatch()

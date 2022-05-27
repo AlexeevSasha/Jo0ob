@@ -9,7 +9,6 @@ import {IRegister} from "../../api/auth/authDto";
 import {useAppDispatch, useAppSelector} from "../../redux/reduxType";
 import {STATUS} from "../../redux/reduxType";
 
-
 const {Title, Paragraph, Text} = Typography;
 
 interface IForm extends IRegister {
