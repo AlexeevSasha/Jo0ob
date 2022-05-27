@@ -1,11 +1,10 @@
-import {FC, useEffect, useRef} from "react";
 import styled from "styled-components";
 import {Carousel} from 'antd';
 import {CarryOutOutlined, HistoryOutlined, BugOutlined} from "@ant-design/icons";
-import {useAppDispatch, useAppSelector} from "../redux/reduxType";
-import {staticAllJobThunk} from "../redux/thunk/job";
+import { useAppSelector} from "../redux/reduxType";
 import {Stats} from "../api/job/jobDto";
 import {useWindowDimensions} from "../hooks/useWindowDimensions";
+import {memo} from "react";
 
 
 const generateStatic = (stats: Stats) => {
@@ -35,14 +34,9 @@ const generateStatic = (stats: Stats) => {
 }
 
 
-export const StaticCard = () => {
-    const dispatch = useAppDispatch()
+export const StaticCard = memo(() => {
     const {statistics} = useAppSelector(state => state.jobs)
     const {width} = useWindowDimensions()
-
-    useEffect(() => {
-        dispatch(staticAllJobThunk())
-    }, [])
     if (!statistics) return null;
     return (
         < >
@@ -74,7 +68,7 @@ export const StaticCard = () => {
             }
         </>
     )
-}
+})
 
 
 const CardGrid = styled.div`
